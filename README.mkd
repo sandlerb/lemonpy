@@ -1,0 +1,3 @@
+# Lemonpy
+
+A python wrapper around lemonbar
