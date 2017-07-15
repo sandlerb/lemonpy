@@ -45,6 +45,9 @@ class Lemonbar(object):
         args = [self._binary_path] + self._build_cli_option_string()
         self._proc = subprocess.Popen(args=args, stdin=subprocess.PIPE)
 
+        # Make the PID public for error reporting
+        self.bar_pid = self._proc.pid
+
     def __del__(self):
         try:
             self.close()

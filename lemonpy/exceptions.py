@@ -1,5 +1,5 @@
 #
-# Lemonpy exceptions
+# Shared Lemonpy exceptions
 #
 
 

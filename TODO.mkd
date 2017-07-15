@@ -1,17 +1,20 @@
 Core Functionality
-[ ] Implement service
-[ ] Implement client
+- [ ] Implement service
+- [ ] Implement client
+
+Server
+- [ ] find, close_bar, update_bar, wait_for_shutdown, command handling thread, create_bar
 
 Nice things
-[ ] clean up file names
-[ ] add logging
-[ ] ContextManager interface
-[ ] Use pythonic args and convert to CLI options
-[ ] add DESIGN.mkd
-[ ] add usage examples to README
-[ ] Basic unit tests eventually, maybe
-[ ] Confirm and enforce python3 requirement (if necessary)
-[ ] Run tests in virtualenv
+- [ ] clean up file names
+- [ ] add logging
+- [ ] ContextManager interface
+- [ ] Use pythonic args and convert to CLI options
+- [ ] add DESIGN.mkd
+- [ ] add usage examples to README
+- [ ] Basic unit tests eventually, maybe
+- [ ] Confirm and enforce python3 requirement (if necessary)
+- [ ] Run tests in virtualenv
 
  Design notes:
 
