@@ -36,6 +36,8 @@
 #       - service.py - LemonbarService
 #       - client - LemonbarClient.py
 #
+#       Would be cool to define a format data type so that update() only updates what's new or requested
+#
 #       Objects:
 #       - Lemonbar - representes a lemonbar instance
 #       - LemonbarManager - manages a group of lemonbar instances
@@ -155,6 +157,10 @@ class Lemonbar(object):
                     _try_and_wait(self._proc.kill)
                 else:
                     raise
+
+    def update(self, content):
+        update_proc = subprocess.Popen(['/bin/echo', content], stdout=self._proc.stdin)
+        update_proc.communicate()
 
     def _build_cli_option_string(self):
         opts = [_option_if_option('-g', self._geometry),
