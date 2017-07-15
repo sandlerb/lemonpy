@@ -2,81 +2,15 @@
 # Python wrapper around lemonbar
 #
 
-# Need to clean up system resources in __del__
-# Maybe add a contextmanager interface?
-
-
-# Design notes:
-#       Want to be able to create a lemonbar and then look up existing lemonbars, something like:
-#       ```
-#       # Client side
-#       bar_content = build_lemonbar_content()
-#       lc = LemonbarClient(service=os.env['LEMONBAR_SERVICE'], bar=os.env['LEMONBAR_NAME'])
-#       lc.update(bar_content)
-
-#       # need a way to trigger shutdown
-#       ````
-#
-#       ```
-#       # Service side
-#
-#       lb = LemonBar.from_yaml('config.yml')
-#       ls = LemonbarService()
-#       ls.register(lb)
-#
-#       ls.wait_for_shutdown()
-#       ```
-#
-#       So to do this we need a server/service/manager running in the background and a way to
-#       connect to it
-#
-#       Need to reorganize files
-#       - lemonbar.py - shared constants, etc
-#       - bar.py - LemonBar
-#       - service.py - LemonbarService
-#       - client - LemonbarClient.py
-#
-#       Would be cool to define a format data type so that update() only updates what's new or requested
-#
-#       Objects:
-#       - Lemonbar - representes a lemonbar instance
-#       - LemonbarManager - manages a group of lemonbar instances
-#           - is this necessary or can we roll it into the Service
-#       - LemonbarService - persistent background service that owns a LemonbarManager
-#       - LemonbarClient - connects to a LemonbarService and provides an API for interacting with
-#                          existing Lemonbar instances
-#       - LemonbarTransport - IPC
-
-
 import shutil
 import subprocess
-import time
+
+from .exceptions import LemonpyError
 
 
 DEFAULT_BINARY_NAME = 'lemonbar'
 
 DEFAULT_PROC_TERMINATE_WAIT_S = 1.0
-
-
-class LemonpyError(Exception):
-    """
-    Base exception type.
-    """
-    pass
-
-
-class OptionError(LemonpyError):
-    """
-    Bad lemonbar option.
-    """
-    pass
-
-
-class LemonbarError(LemonpyError):
-    """
-    Error in or with lemonbar.
-    """
-    pass
 
 
 class Lemonbar(object):
@@ -90,7 +24,6 @@ class Lemonbar(object):
                  force_docking=None, font=None, clickable_areas=None, permanent=None, wm_name=None,
                  underline_width_px=None, bg_color=None, fg_color=None, vertical_offset=None,
                  underline_color=None):
-        # TODO use pythonic args, convert to cli options
         self._geometry = geometry
         self._bottom = bottom
         self._force_docking = force_docking
