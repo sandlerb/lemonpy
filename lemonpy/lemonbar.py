@@ -126,35 +126,16 @@ class Lemonbar(object):
 
         If the user sets kill=True, this method will still try to terminate before resorting to a kill.
         """
-        def _wait():
-            closed = False
-            start = time.time()
-            while (time.time() - start) < timeout_s:
-                if self._proc.poll() is not None:
-                    closed = True
-                    break
-                else:
-                    # TODO this isn't safe, want a floor
-                    time.sleep(timeout_s / 10.0)
-
-            if not closed:
-                raise LemonbarError('Failed to close lemonbar')
-
-        def _try_and_wait(func):
-            func()
-            try:
-                _wait()
-            except LemonbarError:
-                raise LemonbarError('Could not stop the lemonbar process lemonbar')
-
         if self._proc and self._proc.poll() is None:
             # Always try to terminate before killing
             try:
-                _try_and_wait(self._proc.terminate)
-            except LemonbarError:
+                self._proc.terminate()
+                self._proc.wait(timeout=DEFAULT_PROC_TERMINATE_WAIT_S)
+            except subprocess.TimeoutExpired:
                 # TODO log
                 if kill:
-                    _try_and_wait(self._proc.kill)
+                    self._proc.kill()
+                    self._proc.wait(timeout=DEFAULT_PROC_TERMINATE_WAIT_S)
                 else:
                     raise
 
