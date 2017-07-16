@@ -48,6 +48,7 @@ class LemonbarServer(object):
             raise AlreadyManaged('Lemonbar instance is already managed (pid: {})'.format(bar.bar_pid))
 
         self._bar_map.update({local_id: bar})
+        bar.managed = True
 
     def _key_exists(self, key, dictionary):
         return True if dictionary.get(key, None) is not None else False
