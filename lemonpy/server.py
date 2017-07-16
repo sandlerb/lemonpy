@@ -29,6 +29,16 @@ class LemonbarServer(object):
         for _, bar in self._bar_map.items():
             bar.close()
 
+    def close_bar(self, name):
+        bar = self._bar_from_name(name)
+        bar.close()
+
+    def _bar_from_name(self, name):
+        bar = self._bar_map.get(self._name_map.get(name))
+        if bar is None:
+            raise LemonpyError('{} is not a managed lemonbar name')
+        return bar
+
     def register(self, name, bar):
         """
         Register a lemonbar instance with this server.
