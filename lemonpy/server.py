@@ -39,6 +39,10 @@ class LemonbarServer(object):
             raise LemonpyError('{} is not a managed lemonbar name')
         return bar
 
+    def update_bar(self, name, content):
+        bar = self._bar_from_name(name)
+        bar.update(content)
+
     def register(self, name, bar):
         """
         Register a lemonbar instance with this server.
