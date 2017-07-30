@@ -5,7 +5,7 @@
 import shutil
 import subprocess
 
-from .exceptions import LemonpyError
+from .common import LemonpyError
 
 
 DEFAULT_BINARY_NAME = 'lemonbar'
@@ -55,6 +55,9 @@ class Lemonbar(object):
             # TODO log error
             print(le)
             pass
+
+    def is_open(self):
+        return self._proc.poll() != 0
 
     def close(self, kill=False, timeout_s=DEFAULT_PROC_TERMINATE_WAIT_S):
         """

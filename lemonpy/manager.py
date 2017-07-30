@@ -1,4 +1,8 @@
-from .exceptions import LemonpyError
+#
+# Lemonpy manager, managers a group of lemonbar instances
+#
+
+from .common import LemonpyError
 
 import uuid
 
@@ -12,12 +16,12 @@ class DuplicateBarId(LemonpyError):
 
 class AlreadyManaged(LemonpyError):
     """
-    The lemonbar instance is already managed by a LemonbarServer
+    The lemonbar instance is already managed by a LemonpyManager
     """
     pass
 
 
-class LemonbarServer(object):
+class LemonpyManager(object):
     def __init__(self,):
         # Map of local IDs to actual lemonbar instances
         self._bar_map = dict()
@@ -36,7 +40,7 @@ class LemonbarServer(object):
     def _bar_from_name(self, name):
         bar = self._bar_map.get(self._name_map.get(name))
         if bar is None:
-            raise LemonpyError('{} is not a managed lemonbar name')
+            raise LemonpyError('{} is not a managed lemonbar name'.format(name))
         return bar
 
     def update_bar(self, name, content):
