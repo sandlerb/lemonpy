@@ -16,14 +16,6 @@ Nice things
 
  Design notes:
 
-Want to be able to create a lemonbar and then look up existing lemonbars, something like:
-```
-# Client side
-bar_content = build_lemonbar_content()
-lc = LemonbarClient(service=os.env['LEMONBAR_SERVICE'], bar=os.env['LEMONBAR_NAME'])
-lc.update(bar_content)
-```
-
 ```
 # Service side
 
@@ -44,12 +36,3 @@ Need to reorganize files
 - client - LemonbarClient.py
 
 Would be cool to define a format data type so that update() only updates what's new or requested
-
-Objects:
-- Lemonbar - representes a lemonbar instance
-- LemonbarManager - manages a group of lemonbar instances
-   - is this necessary or can we roll it into the Service
-- LemonbarService - persistent background service that owns a LemonbarManager
-- LemonbarClient - connects to a LemonbarService and provides an API for interacting with
-                  existing Lemonbar instances
-- LemonbarTransport - IPC
