@@ -77,6 +77,7 @@ class LemonpyServer(object):
     def close(self):
         # TODO need a context manager interface so the user doesn't have to atexit
         self._stop()
+        self._socket.settimeout(0.1)
         self._rx_thread.join()
         self._worker_thread.join()
         self._manager.close()
