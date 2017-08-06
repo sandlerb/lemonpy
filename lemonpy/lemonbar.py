@@ -79,8 +79,7 @@ class Lemonbar(object):
                     raise
 
     def update(self, content):
-        update_proc = subprocess.Popen(['/bin/echo', content], stdout=self._proc.stdin)
-        update_proc.communicate()
+        subprocess.run(['/bin/echo', content], stdout=self._proc.stdin)
 
     def _build_cli_option_string(self):
         opts = [_option_if_option('-g', self._geometry),
