@@ -1,5 +1,59 @@
 # Lemonpy
 
-**Work in progress**
+**Work in progress, API subject to change**
 
 A python wrapper around lemonbar
+
+## Usage
+
+### Standalone
+```
+from lemonpy.lemonbar import Lemonbar
+
+REFRESH_PERIOD_S = 5
+
+bottom_bar = Lemonbar(permanent=True, bottom=True, font='Hack:size=10')
+
+while True:
+    try:
+        bottom_bar.update(get_content())
+        time.sleep(REFRESH_PERIOD_S)
+    except KeyboardInterrupt:
+        break
+```
+
+### With IPC
+
+If you want to use the client-server interface the simplest, safest way is to use the context
+manager interface of `LemonpyServer`.  The server is started in `__enter__` and the system
+resources will be cleaned up in `__exit__`.
+
+Alternately, you can register a call to `LemonpyServer.close()` with `atexit`.
+
+```
+from lemonpy.lemonbar import Lemonbar
+from lemonpy.ipc import LemonpyServer
+
+bottom_bar = Lemonbar(permanent=True, bottom=True, font='Hack:size=10')
+
+with LemonpyServer('my_unix_socket', bars={'bottom': bottom_bar}):
+    while True:
+        try:
+            bottom_bar.update(get_content())
+            time.sleep(REFRESH_PERIOD_S)
+        except KeyboardInterrupt:
+            break
+```
+Then, from another process:
+```
+from lemonpy.ipc import LemonpyClient
+
+lc = LemonpyClient('my_unix_socket')
+lc.update_bar('bottom', 'IPC!')
+```
+
+## TODO
+
+- [ ] Naming clean up
+- [ ] logging
+- [ ] More pythonic args for `Lemonbar`
