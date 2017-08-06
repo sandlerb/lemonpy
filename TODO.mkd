@@ -1,9 +1,7 @@
-Core Functionality
-- [ ] Implement service
-- [ ] Implement client
+- [ ] Installation?
 
 Server
-- [ ] find, close_bar, update_bar, wait_for_shutdown, command handling thread, create_bar
+- [ ] create_bar
 
 Nice things
 - [ ] clean up file names
@@ -24,8 +22,6 @@ Want to be able to create a lemonbar and then look up existing lemonbars, someth
 bar_content = build_lemonbar_content()
 lc = LemonbarClient(service=os.env['LEMONBAR_SERVICE'], bar=os.env['LEMONBAR_NAME'])
 lc.update(bar_content)
-
-# need a way to trigger shutdown
 ```
 
 ```
