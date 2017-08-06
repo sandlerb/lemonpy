@@ -92,6 +92,13 @@ class LemonpyServer(object):
         self._socket.bind(self._socket_path)
         self._socket.settimeout(5)
 
+    def __enter__(self):
+        self.run()
+        return self
+
+    def __exit__(self, *args):
+        self.close()
+
     def register(self, name, bar):
         self._manager.register(name, bar)
 
