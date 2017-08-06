@@ -103,7 +103,7 @@ def _option_if_option(switch, option):
     if option is None:
         return None
 
-    return ' ' + switch + ' ' + option
+    return switch + ' ' + option
 
 
 def _option_flag(switch, arg):
