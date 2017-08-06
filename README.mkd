@@ -1,3 +1,5 @@
 # Lemonpy
 
+**Work in progress**
+
 A python wrapper around lemonbar
